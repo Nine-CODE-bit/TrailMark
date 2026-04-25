@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">TrailMark</string>
+
+    <!--
+        Google Maps API Key placeholder.
+        Replace "YOUR_API_KEY_HERE" with your real key from Google Cloud Console.
+        Steps:
+          1. Go to https://console.cloud.google.com/
+          2. Create or select a project
+          3. Enable "Maps SDK for Android"
+          4. Create an API key (restrict it to Android apps for security)
+          5. Paste the key below, replacing YOUR_API_KEY_HERE
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">YOUR_API_KEY_HERE</string>
+
+    <!-- UI Strings -->
+    <string name="my_location">My Location</string>
+    <string name="add_marker">Add Marker</string>
+    <string name="delete_marker">Delete</string>
+    <string name="markers_list">Trail Markers</string>
+    <string name="no_markers">No markers yet. Tap \'Add Marker\' to save your current location.</string>
+    <string name="permission_rationale">TrailMark needs location permission to show your position on the map and record trail markers.</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="location_unavailable">Location unavailable</string>
+    <string name="marker_added">Marker added at current location</string>
+    <string name="marker_deleted">Marker deleted</string>
+    <string name="loading_location">Getting your location…</string>
+</resources>
