@@ -1,5 +1,3 @@
-# TrailMark Documentation
-
 # TrailMark - 离线 GPS 登山记录应用 | Offline GPS Hiking App
 
 [中文](#中文版本) | [English](#english-version)
@@ -85,34 +83,382 @@ CREATE TABLE check_in_logs (
   energyLevel INTEGER
 )
 ```
+
+### 🚀 快速开始
+
+**前置需求**
+- Android Studio Flamingo+
+- JDK 11+
+- Android SDK API 26+
+
+**构建和运行**
+```bash
+git clone https://github.com/Nine-CODE-bit/TrailMark.git
+cd TrailMark
+./gradlew clean build
+# 在 Android Studio 中打开并按 Shift + F10 运行
+```
+
+### ⚙️ 环境配置
+
+**Java Home 设置** (gradle.properties)
+```properties
+org.gradle.java.home=E:\AndroidStudio\jbr
+org.gradle.jvmargs=-Xmx4096m -XX:MaxPermSize=512m
+org.gradle.parallel=true
+org.gradle.caching=true
+```
+
+**权限声明** (AndroidManifest.xml)
+```xml
+<!-- 定位权限 -->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+<!-- 相机权限 -->
+<uses-permission android:name="android.permission.CAMERA" />
+
+<!-- 存储权限 -->
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+<!-- 后台定位服务 -->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+```
+
+### 📋 依赖库
+
+```gradle
+dependencies {
+  // Compose UI
+  implementation("androidx.compose.ui:ui:1.6.0")
+  implementation("androidx.compose.material3:material3:1.1.0")
+  
+  // Location Services
+  implementation("com.google.android.gms:play-services-location:21.3.0")
+  
+  // Room Database
+  implementation("androidx.room:room-runtime:2.6.1")
+  implementation("androidx.room:room-ktx:2.6.1")
+  ksp("androidx.room:room-compiler:2.6.1")
+  
+  // CameraX
+  implementation("androidx.camera:camera-core:1.3.1")
+  implementation("androidx.camera:camera-camera2:1.3.1")
+  implementation("androidx.camera:camera-lifecycle:1.3.1")
+  
+  // Image Loading
+  implementation("io.coil-kt:coil-compose:2.7.0")
+  
+  // Permissions
+  implementation("com.google.accompanist:accompanist-permissions:0.36.0")
+  
+  // Coroutines
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+}
+```
+
+### 🎯 开发计划
+
+| 周数 | 任务 | 状态 |
+|------|------|------|
+| 第1周 | 数据库 + 后台定位 | ✅ 完成 |
+| 第2周 | Canvas 绘制 + 实时更新 | 🔄 进行中 |
+| 第3周 | CameraX + 打卡系统 | 📋 计划中 |
+| 第4周 | 完整 UI + 历史记录 | 📋 计划中 |
+| 第5周 | 测试 + 优化 | 📋 计划中 |
+
+### 🔍 核心挑战
+
+**1. 后台定位限制**
+- 挑战：Android 系统对后台定位访问限制严格
+- 解决：前台服务 + 持久化通知
+
+**2. 图片内存管理**
+- 挑战：打卡照片可能导致内存溢出
+- 解决：Coil 压缩 + 缓存策略
+
+**3. Canvas 绘制性能**
+- 挑战：超长路线可能卡顿
+- 解决：轨迹简化 + 分批渲染
+
+### 📁 项目结构
+
+```
+TrailMark/
+├── app/src/main/java/com/example/trailmark/
+│   ├── data/
+│   │   ├── entity/              # 数据实体
+│   │   ├── dao/                 # DAO 接口
+│   │   ├── database/            # 数据库配置
+│   │   └── repository/          # 仓库模式
+│   ├── ui/
+│   │   ├── screens/             # Compose 屏幕
+│   │   ├── components/          # UI 组件
+│   │   ├── viewmodel/           # ViewModel
+│   │   └── theme/               # 主题配置
+│   ├── service/                 # 后台服务
+│   ├── util/                    # 工具类
+│   └── MainActivity.kt
+├── gradle/
+│   └── libs.versions.toml       # 依赖版本
+├── build.gradle.kts             # Gradle 配置
+└── README.md
+```
+
+### 📄 许可证
+MIT License
+
+### 👤 开发者
+Nine-CODE-bit
+
+---
+
 ## English Version
 
-### Overview
-TrailMark is an application designed for effective offline GPS recording, allowing users to track their journeys seamlessly without needing an internet connection.
+### 📱 Project Overview
 
-### Key Features
-- **Canvas-based Path Drawing**: Instead of relying on Google Maps, TrailMark implements a robust canvas feature that enables users to visualize their paths dynamically.
-- **Local Check-in System**: The app allows users to check in at specific points along their route, ensuring that all locations are saved for future reference.
+TrailMark is a native Android application designed for outdoor enthusiasts, running completely offline without any online map services. It features custom Canvas-based path drawing, GPS trajectory tracking, multi-dimensional check-in recording, and local data storage.
 
-### Tech Stack
-- **Frontend**: HTML5, CSS3, JavaScript
-- **Backend**: Node.js, Express
-- **Database**: SQLite for local data storage
-- **Mapping**: Custom canvas drawing solution
+**Use Cases:**
+- 🏔️ High-altitude mountain regions
+- 🌄 Areas without network coverage
+- 🚶 Long-duration hiking trips
 
-### Setup Instructions
-1. Clone the repository: `git clone https://github.com/Nine-CODE-bit/TrailMark.git`
-2. Navigate to the project directory: `cd TrailMark`
-3. Install dependencies: `npm install`
-4. Run the application: `npm start`
-5. Access the application at `http://localhost:3000`
+### ✨ Core Features
 
-### Development Plan
-- **Phase 1**: Implement basic GPS recording functionality.
-- **Phase 2**: Develop the canvas-based path drawing feature.
-- **Phase 3**: Establish the local check-in system.
-- **Phase 4**: Testing and bug fixing.
-- **Phase 5**: User feedback and final adjustments.
+#### 1. Active Trek Tracking 📍
+- Real-time dashboard with distance, altitude, pace
+- Background service with persistent notification
+- Low-power, high-precision GPS tracking
 
-### Conclusion
-The offline GPS recording version of TrailMark provides users with a comprehensive tool for tracking their journeys in a user-friendly manner, free from external map dependencies.
+#### 2. Canvas Path Visualization 🎨
+- Custom path drawing with blue lines, green start, red end
+- Color-coded check-in markers based on energy level
+- Completely offline operation
+
+#### 3. Multi-Dimensional Check-ins & Journaling 📸
+- Photo capture with CameraX
+- Energy level: 1-5 rating
+- Body condition tags and journal text
+
+#### 4. History & Data Management 📋
+- Trek record list view
+- Detailed route review
+- SQLite local storage
+
+### 🛠️ Tech Stack
+
+**Framework & Language**
+- Kotlin + Jetpack Compose + Material Design 3
+- MVVM Architecture
+
+**Core Libraries**
+- Room Database (SQLite)
+- Kotlin Coroutines + Flow
+- FusedLocationProviderClient
+- CameraX + Coil
+- Accompanist Permissions
+
+### 🗄️ Database Design
+
+```sql
+-- Trek Session
+CREATE TABLE trek_sessions (
+  id INTEGER PRIMARY KEY,
+  routeName TEXT,
+  startTime LONG,
+  endTime LONG,
+  totalDistance DOUBLE
+)
+
+-- GPS Waypoint
+CREATE TABLE waypoints (
+  id INTEGER PRIMARY KEY,
+  trekSessionId LONG,
+  latitude DOUBLE,
+  longitude DOUBLE,
+  altitude DOUBLE,
+  timestamp LONG
+)
+
+-- Check-in Log
+CREATE TABLE check_in_logs (
+  id INTEGER PRIMARY KEY,
+  trekSessionId LONG,
+  latitude DOUBLE,
+  longitude DOUBLE,
+  photoUri TEXT,
+  journalText TEXT,
+  energyLevel INTEGER
+)
+```
+
+### 🚀 Quick Start
+
+**Prerequisites**
+- Android Studio Flamingo+
+- JDK 11+
+- Android SDK API 26+
+
+**Build & Run**
+```bash
+git clone https://github.com/Nine-CODE-bit/TrailMark.git
+cd TrailMark
+./gradlew clean build
+# Open in Android Studio and press Shift + F10
+```
+
+### ⚙️ Configuration
+
+**Java Home Setup** (gradle.properties)
+```properties
+org.gradle.java.home=E:\AndroidStudio\jbr
+org.gradle.jvmargs=-Xmx4096m -XX:MaxPermSize=512m
+org.gradle.parallel=true
+org.gradle.caching=true
+```
+
+**Permissions** (AndroidManifest.xml)
+```xml
+<!-- Location Permissions -->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+<!-- Camera Permission -->
+<uses-permission android:name="android.permission.CAMERA" />
+
+<!-- Storage Permissions -->
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+<!-- Background Location Service -->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+```
+
+### 📋 Dependencies
+
+```gradle
+dependencies {
+  // Compose UI
+  implementation("androidx.compose.ui:ui:1.6.0")
+  implementation("androidx.compose.material3:material3:1.1.0")
+  
+  // Location Services
+  implementation("com.google.android.gms:play-services-location:21.3.0")
+  
+  // Room Database
+  implementation("androidx.room:room-runtime:2.6.1")
+  implementation("androidx.room:room-ktx:2.6.1")
+  ksp("androidx.room:room-compiler:2.6.1")
+  
+  // CameraX
+  implementation("androidx.camera:camera-core:1.3.1")
+  implementation("androidx.camera:camera-camera2:1.3.1")
+  implementation("androidx.camera:camera-lifecycle:1.3.1")
+  
+  // Image Loading
+  implementation("io.coil-kt:coil-compose:2.7.0")
+  
+  // Permissions
+  implementation("com.google.accompanist:accompanist-permissions:0.36.0")
+  
+  // Coroutines
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+}
+```
+
+### 🎯 Development Plan
+
+| Week | Tasks | Status |
+|------|-------|--------|
+| Week 1 | Database + Background Location | ✅ Complete |
+| Week 2 | Canvas Drawing + Real-time Updates | 🔄 In Progress |
+| Week 3 | CameraX + Check-in System | 📋 Planned |
+| Week 4 | Complete UI + History | 📋 Planned |
+| Week 5 | Testing + Optimization | 📋 Planned |
+
+### 🔍 Core Challenges
+
+**1. Background Location Restrictions**
+- Challenge: Android system restricts background location access
+- Solution: Foreground service + persistent notification
+
+**2. Image Memory Management**
+- Challenge: Check-in photos may cause memory overflow
+- Solution: Coil compression + caching strategy
+
+**3. Canvas Drawing Performance**
+- Challenge: Long tracks may cause lag
+- Solution: Trajectory simplification + batch rendering
+
+### 📁 Project Structure
+
+```
+TrailMark/
+├── app/src/main/java/com/example/trailmark/
+│   ├── data/
+│   │   ├── entity/              # Data Entities
+│   │   ├── dao/                 # Data Access Objects
+│   │   ├── database/            # Database Config
+│   │   └── repository/          # Repository Pattern
+│   ├── ui/
+│   │   ├── screens/             # Compose Screens
+│   │   ├── components/          # UI Components
+│   │   ├── viewmodel/           # ViewModels
+│   │   └── theme/               # Theme Config
+│   ├── service/                 # Background Services
+│   ├── util/                    # Utility Classes
+│   └── MainActivity.kt
+├── gradle/
+│   └── libs.versions.toml       # Dependency Versions
+├── build.gradle.kts             # Gradle Config
+└── README.md
+```
+
+### 📄 License
+MIT License
+
+### 👤 Developer
+Nine-CODE-bit
+
+---
+
+**Last Updated**: 2026-04-26
+```
+
+</file_block_syntax>
+
+---
+
+## 📋 使用说明
+
+### **✅ 直接复制粘贴方法**
+
+1. **复制上面的完整 README 内容**
+
+2. **在 GitHub 网页上编辑：**
+   - 访问 https://github.com/Nine-CODE-bit/TrailMark
+   - 点击 README.md 文件
+   - 点击 ✏️ 编辑按钮
+   - 清空所有内容
+   - 粘贴新的 README 内容
+   - 点击 "Commit changes"
+
+3. **或在本地编辑并推送：**
+   ```bash
+   cd TrailMark
+   # 用编辑器打开 README.md
+   nano README.md
+   
+   # 粘贴新内容，保存并退出
+   
+   # 提交到 GitHub
+   git add README.md
+   git commit -m "Update README with bilingual documentation"
+   git push origin main
+   ```
+
+---
