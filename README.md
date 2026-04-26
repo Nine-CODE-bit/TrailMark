@@ -85,8 +85,7 @@ CREATE TABLE check_in_logs (
   energyLevel INTEGER
 )
 ```
-
-## Offline GPS Recording Version
+## English Version
 
 ### Overview
 TrailMark is an application designed for effective offline GPS recording, allowing users to track their journeys seamlessly without needing an internet connection.
