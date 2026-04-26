@@ -427,38 +427,5 @@ Nine-CODE-bit
 ---
 
 **Last Updated**: 2026-04-26
-```
-
-</file_block_syntax>
-
----
-
-## 📋 使用说明
-
-### **✅ 直接复制粘贴方法**
-
-1. **复制上面的完整 README 内容**
-
-2. **在 GitHub 网页上编辑：**
-   - 访问 https://github.com/Nine-CODE-bit/TrailMark
-   - 点击 README.md 文件
-   - 点击 ✏️ 编辑按钮
-   - 清空所有内容
-   - 粘贴新的 README 内容
-   - 点击 "Commit changes"
-
-3. **或在本地编辑并推送：**
-   ```bash
-   cd TrailMark
-   # 用编辑器打开 README.md
-   nano README.md
-   
-   # 粘贴新内容，保存并退出
-   
-   # 提交到 GitHub
-   git add README.md
-   git commit -m "Update README with bilingual documentation"
-   git push origin main
-   ```
 
 ---
