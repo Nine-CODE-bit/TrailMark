@@ -84,6 +84,7 @@ CREATE TABLE check_in_logs (
   journalText TEXT,
   energyLevel INTEGER
 )
+```
 
 ## Offline GPS Recording Version
 
